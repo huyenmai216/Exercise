@@ -57,14 +57,14 @@ public class Exercise_04_dropdown_list_elements {
         Select month = new Select(driver.findElement(By.name("DateOfBirthMonth")));
         month.selectByVisibleText(mm);
         Select year = new Select(driver.findElement(By.name("DateOfBirthYear")));
-        month.selectByVisibleText(yyyy);
+        year.selectByVisibleText(yyyy);
 
         //verify dropdown này là single choice
         Assert.assertFalse(year.isMultiple());
 
         // Verify số lưongj item là 32
 
-        List<WebElement> yearOptions =month.getOptions();
+        List<WebElement> yearOptions =year.getOptions();
         Assert.assertEquals(yearOptions.size(),112);
 
         driver.findElement(By.cssSelector("input#Email")).sendKeys(email);
@@ -80,6 +80,7 @@ public class Exercise_04_dropdown_list_elements {
 
     }
 
+    @Test
     public void TC_02_Check_Account_Info() {
         //truy cập vào trang
         driver.get("https://demo.nopcommerce.com");
@@ -93,24 +94,22 @@ public class Exercise_04_dropdown_list_elements {
 
         Assert.assertTrue(driver.findElement(By.cssSelector("input#gender-female")).isSelected());
 
-        Assert.assertEquals(driver.findElement(By.cssSelector("input#FirstName")),firstName);
+        Assert.assertEquals(driver.findElement(By.cssSelector("input#FirstName")).getAttribute("value"),firstName);
 
-        Assert.assertEquals(driver.findElement(By.cssSelector("input#LastName")), lastName);
+        Assert.assertEquals(driver.findElement(By.cssSelector("input#LastName")).getAttribute("value"), lastName);
 
-        Assert.assertEquals(driver.findElement(By.name("DateOfBirthDay")),dd);
+        Assert.assertEquals(driver.findElement(By.name("DateOfBirthDay")).getAttribute("value"),dd);
 
-        Assert.assertEquals(driver.findElement(By.name("DateOfBirthMonth")),mm);
+        Assert.assertEquals(driver.findElement(By.xpath("//select[@name='DateOfBirthMonth']/option[@selected='']")).getText(),mm);
 
-        Assert.assertEquals(driver.findElement(By.name("DateOfBirthYear")),yyyy);
+        Assert.assertEquals(driver.findElement(By.name("DateOfBirthYear")).getAttribute("value"),yyyy);
 
-        Assert.assertEquals(driver.findElement(By.cssSelector("input#Email")),email);
+        Assert.assertEquals(driver.findElement(By.cssSelector("input#Email")).getAttribute("value"),email);
 
-        Assert.assertEquals(driver.findElement(By.cssSelector("input#Company")),companyName);
-
-
+        Assert.assertEquals(driver.findElement(By.cssSelector("input#Company")).getAttribute("value"),companyName);
 
 
-        driver.findElement(By.cssSelector("input#gender-female")).click();
+        driver.quit();
     }
 
     public void sleepInSecond(long timeInSecond){
